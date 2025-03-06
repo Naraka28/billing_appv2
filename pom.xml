@@ -1,0 +1,33 @@
+<build>
+    <plugins>
+        <!-- Docker Maven Plugin -->
+        <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.38.1</version> <!-- Check latest version -->
+            <configuration>
+                <images>
+                    <image>
+                        <name>my-jenkins-container</name>
+                        <build>
+                            <dockerFile>Dockerfile</dockerFile>
+                        </build>
+                        <run>
+                            <ports>
+                                <port>8081:8080</port>
+                                <port>50000:50000</port>
+                            </ports>
+                            <volumes>
+                                <volume>/var/run/docker.sock:/var/run/docker.sock</volume>
+                                <volume>jenkins_home:/var/jenkins_home</volume>
+                            </volumes>
+                            <env>
+                                <JAVA_OPTS>-Djenkins.install.runSetupWizard=false</JAVA_OPTS>
+                            </env>
+                        </run>
+                    </image>
+                </images>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
